@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.index');
-});
+Route::get('/', 'FrontendController@index');
 
 Route::get(trans('routes.object'),'FrontendController@object')->name('object'); 
 Route::get(trans('routes.roomsearch'),'FrontendController@roomsearch')->name('roomSearch');
