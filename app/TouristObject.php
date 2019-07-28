@@ -7,13 +7,15 @@
 
 namespace App; /* Lecture 12 */
 
-use Illuminate\Database\Eloquent\Model; /* Lecture 12 */
+use Illuminate\Database\Eloquent\Model; 
+use Illuminate\Support\Facades\Auth;
 
-/* Lecture 12 */
 class TouristObject extends Model
 {
 
     protected $table = 'objects';
+
+    use Enjoythetrip\Presenters\ObjectPresenter;
 
     /* Lecture 14 */
     public function city() 
@@ -56,6 +58,11 @@ class TouristObject extends Model
      public function articles()
     {
         return $this->hasMany('App\Article','object_id');
+    }
+
+    public function isLiked()
+    {
+        return $this->users()->where('user_id', Auth::user()->id)->exists();
     }
     
     

@@ -48,4 +48,15 @@ class User extends Authenticatable
     {
         return $this->morphMany('App\Photo', 'photoable');
     }
+
+     public function larticles()
+    {
+        return $this->morphedByMany('App\Article', 'likeable');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
 }

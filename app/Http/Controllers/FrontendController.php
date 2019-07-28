@@ -16,6 +16,9 @@ class FrontendController extends Controller
 
     public function __construct(FrontendRepositoryInterface $frontendRepository,FrontendGateway $frontendGateway)
     {
+       
+         $this->middleware('auth')->only(['makeReservation','addComment','like','unlike']); 
+
         $this->fR = $frontendRepository;
         $this->fG = $frontendGateway;
     }
@@ -28,9 +31,12 @@ class FrontendController extends Controller
     }
     
     
-    public function article()
+    public function article($id)
     {
-        return view('frontend.article');
+
+        $article = $this->fR->getArticle($id);
+
+        return view('frontend.article',compact('article'));
     }
     
     
@@ -42,9 +48,10 @@ class FrontendController extends Controller
     }
     
     
-    public function person()
+    public function person($id)
     {
-        return view('frontend.person');
+        $user = $this->fR->getPerson($id); 
+        return view('frontend.person',['user'=>$user]);
     }
     
     
@@ -87,6 +94,22 @@ class FrontendController extends Controller
         $results = $this->fG->searchCities($request);
 
         return response()->json($results);
+    }
+
+
+     public function like($likeable_id, $type, Request $request)
+    {
+        $this->fR->like($likeable_id, $type, $request);
+
+        return redirect()->back();
+    }
+
+
+     public function unlike($likeable_id, $type, Request $request)
+    {
+        $this->fR->unlike($likeable_id, $type, $request);
+        
+        return redirect()->back();
     }
 
 }

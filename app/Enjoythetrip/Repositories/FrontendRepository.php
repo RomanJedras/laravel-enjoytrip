@@ -7,7 +7,7 @@
 
 namespace App\Enjoythetrip\Repositories; 
 
-use App\{TouristObject,City,Room}; 
+use App\{TouristObject,City,Room, Article, User}; 
 use App\Enjoythetrip\Interfaces\FrontendRepositoryInterface;
 
 class FrontendRepository implements FrontendRepositoryInterface {
@@ -44,6 +44,30 @@ class FrontendRepository implements FrontendRepositoryInterface {
     {
         return  Reservation::where('room_id',$room_id)->get(); 
     } 
+
+    public function getArticle($id)
+    {
+        return  Article::with(['object.photos','comments'])->find($id);
+    } 
+
+    public function getPerson($id)
+    {
+        return  User::with(['objects','larticles','comments.commentable'])->find($id);
+    } 
+
+     public function like($likeable_id, $type, $request)
+    {
+        $likeable = $type::find($likeable_id);
+      
+        return $likeable->users()->attach($request->user()->id);
+    }
+
+    public function unlike($likeable_id, $type, $request)
+    {
+        $likeable = $type::find($likeable_id);
+      
+        return $likeable->users()->detach($request->user()->id);
+    }
   
 }
 

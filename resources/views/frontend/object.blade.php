@@ -35,14 +35,11 @@
         </div>
         <div class="tab-pane fade" id="people">
 
-            <ul class="list-inline">
+             <ul class="list-inline">
                 @foreach( $object->users as $user) 
+                    <li><a href="{{ route('person',['id'=>$user->id]) }}"><img title="{{ $user->FullName  }}" class="media-object img-responsive" width="50" height="50" src="{{ $user->photos->first()->path ?? $placeholder }}" alt="..."> </a></li>
 
-                    <li><a href="{{ route('person') }}"><img title="{{ $user->FullName  }}" class="media-object img-responsive" width="50" height="50" src="{{ $user->photos->first()->path ?? $placeholder }}" alt="..."> </a></li>
-                }
-                }
-
-                @endforeach 
+                @endforeach
             </ul>
 
 
@@ -88,7 +85,7 @@
         @foreach( $object->comments as $comment ) 
             <div class="media">
                 <div class="media-left media-top">
-                    <a title="{{ $comment->user->FullName /* Lecture 16 */ }}" href="{{ route('person') }}">
+                   <a title="{{ $comment->user->FullName }}" href="{{ route('person',['id'=>$comment->user->id]) }}">
                         <img class="media-object" width="50" height="50" src="{{ $comment->user->photos->first()->path ?? $placeholder }}" alt="...">
                     </a>
                 </div>
@@ -149,12 +146,24 @@
                 <p><b> {{ $article->user->FullName }} </b>
                     <i>{{ $article->created_at }} </i>
                 </p>
-                <p>{{ str_limit($article->content,250) }} </p> <a href="{{ route('article') }}">More</a>
+                <p>{{ str_limit($article->content,250) }} <!-- Lecture 16 --> </p> <a href="{{ route('article',['id'=>$article->id]/* Lecture 22 */) }}">More</a>
             </div>
 
         @endforeach 
     </section>
 
-    <a href="#" class="btn btn-primary btn-xs top-buffer">Like this object</a>
+    @auth
+    
+        @if( $object->isLiked() )
+       <a href="{{ route('unlike',['id'=>$object->id,'type'=>'App\TouristObject']) }}" class="btn btn-primary btn-xs top-buffer">Unlike this object</a>
+        @else
+       <a href="{{ route('like',['id'=>$object->id,'type'=>'App\TouristObject']) }}" class="btn btn-primary btn-xs top-buffer">Like this object</a>
+        @endif 
+    
+    @else
+    
+    <p><a href="{{ route('login') }}">Login to like this object</a></p>
+  
+    @endauth
 </div>
 @endsection
