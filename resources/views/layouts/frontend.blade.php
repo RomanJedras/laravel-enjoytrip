@@ -39,6 +39,10 @@ THE SOFTWARE.-->
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <link rel="stylesheet" href="{{ asset('css/app.css')  }}">
+
+        <script>
+            var base_url = '{{ url('/') }}';
+        </script>    
     </head>
     <body>
 
@@ -51,7 +55,7 @@ THE SOFTWARE.-->
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="./">Home</a>
+                    <a class="navbar-brand" href="{{ route('home') }}">Home</a>
                 </div>
                  <div id="navbar" class="navbar-collapse collapse">
                     @auth <!-- Lecture 7 -->
@@ -89,7 +93,7 @@ THE SOFTWARE.-->
                 <h1>Enjoy the trip!</h1>
                 <p>A platform for tourists and owners of tourist facilities. Find the original place for the holidays!</p>
                 <p>Place your home on the site and let yourself be found by many tourists!</p>
-                <form action="{{route('roomSearch') }}" class="form-inline">
+                <form method="POST" action="{{route('roomSearch') }}" class="form-inline">
                     <div class="form-group">
                         <label class="sr-only" for="city">City</label>
                         <input name="city" type="text" class="form-control autocomplete" id="city" placeholder="City">
@@ -113,8 +117,10 @@ THE SOFTWARE.-->
                             <option value="5">5</option>
                         </select>
                     </div>
+
                     <button type="submit" class="btn btn-warning">Search</button>
-                    <input type="hidden" name="view" value="roomsearch">
+                    {{ csrf_field() }}
+                    
                 </form>
 
             </div>

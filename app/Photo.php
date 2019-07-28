@@ -11,7 +11,7 @@ class Photo extends Model
 	protected $table = 'photos';
 
 
-     public function photoable()
+     public function photoable ()
     {
         return $this->morphTo();
     }

@@ -4,6 +4,12 @@
 @section('content')
 <div class="container-fluid places">
 
+     @if (session('norooms'))
+    <p class="text-center red bolded">
+        {{ session('norooms') }}
+    </p>
+    @endif
+
     <p class="text-center red bolded">No offers were found that met the criteria</p>
     <h1 class="text-center">Interesting places</h1>
     
@@ -20,19 +26,18 @@
                             <h3>{{ $object->name }} <small>{{ $object->city->name  }}
                             </small> </h3>
                             <p>{{ str_limit($object->description,100) }}</p>
-                            <p><a href="{{ route('object') }}" class="btn btn-primary" role="button">Details</a></p>
+                           <p><a href="{{ route('object',['id'=>$object->id]) }}" class="btn btn-primary" role="button">Details</a></p>
                         </div>
                     </div>
                 </div>
 
            @endforeach 
 
-
         </div>
 
     @endforeach   
     
-
+     {{ $objects->links() }}
 </div>
 
 @endsection

@@ -5,3 +5,18 @@
  */
 
 require('./bootstrap');
+
+
+$(function () {
+    $(".autocomplete").autocomplete({
+        source: ["South Lucienne","Legrosside","North Wilmer","North Delaneyberg","Lake Estelle", "New York", "Warsaw", "Berlin", "Auckland", "Johannesburg", "Dubai"],
+        minLength: 2,
+        select: function (event, ui) {
+            
+            console.log(ui.item.value);
+        }
+
+
+    });
+});
+

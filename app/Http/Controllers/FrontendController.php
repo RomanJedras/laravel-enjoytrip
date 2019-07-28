@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Enjoythetrip\Interfaces\FrontendRepositoryInterface;
-
+use App\Enjoythetrip\Gateways\FrontendGateway;
 
 class FrontendController extends Controller
 {
     //
 
     private $fR;
+    private $fG;
 
 
-    public function __construct(FrontendRepositoryInterface $frontendRepository)
+    public function __construct(FrontendRepositoryInterface $frontendRepository,FrontendGateway $frontendGateway)
     {
         $this->fR = $frontendRepository;
+        $this->fG = $frontendGateway;
     }
 
    	public function index()
@@ -32,10 +34,11 @@ class FrontendController extends Controller
     }
     
     
-    public function object()
+    public function object($id)
     {
-      
-        return view('frontend.object');
+      $object = $this->fR->getObject($id);
+
+        return view('frontend.object')->with('object',$object);
     }
     
     
@@ -51,9 +54,28 @@ class FrontendController extends Controller
     }
     
     
-    public function roomsearch()
+    public function roomsearch(Request $request)
     {
-        return view('frontend.roomsearch');
+
+         if($city = $this->fG->getSearchResults($request))
+        {
+            dd($city);
+            return view('frontend.roomsearch',['city'=>$city]);
+        }
+        else
+        {
+            if (!$request->ajax())
+            return redirect('/')->with('norooms', __('No offers were found matching the criteria'));
+        }
+    }
+
+
+     public function searchCities(Request $request)
+    {
+
+        $results = $this->fG->searchCities($request);
+
+        return response()->json($results);
     }
 
 }
