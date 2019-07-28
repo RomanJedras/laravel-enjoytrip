@@ -15,11 +15,12 @@ Route::get('/', 'FrontendController@index')->name('home');
 
 Route::get(trans('routes.object').'/{id}','FrontendController@object')->name('object'); 
 Route::post(trans('routes.roomsearch'),'FrontendController@roomsearch')->name('roomSearch');
-Route::get(trans('routes.room'),'FrontendController@room')->name('room'); 
-Route::get(trans('routes.article'),'FrontendController@article')->name('article'); 
+Route::get(trans('routes.room').'/{id}','FrontendController@room')->name('room'); 
+Route::get(trans('routes.article').'/{id}','FrontendController@article')->name('article'); 
 Route::get(trans('routes.person'),'FrontendController@person')->name('person'); 
  
 Route::get('/searchCities', 'FrontendController@searchCities');
+Route::get('/ajaxGetRoomReservations/{id}', 'FrontendController@ajaxGetRoomReservations');
 
 Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){ 
     

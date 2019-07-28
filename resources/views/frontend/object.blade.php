@@ -69,7 +69,7 @@
                             <div class="caption">
                                 <h3>Nr {{ $room->room_number}} </h3>
                                 <p>{{ str_limit($room->description,70) }}  </p>
-                                <p><a href="{{ route('room') }}" class="btn btn-primary" role="button">Details</a><a href="{{ route('room') }}#reservation" class="btn btn-success pull-right" role="button">Reservation</a></p>
+                                <p><a href="{{ route('room',['id'=>$room->id]) }}" class="btn btn-primary" role="button">Details</a><a href="{{ route('room',['id'=>$room->id]) }}#reservation" class="btn btn-success pull-right" role="button">Reservation</a></p>
                             </div>
                         </div>
                     </div>

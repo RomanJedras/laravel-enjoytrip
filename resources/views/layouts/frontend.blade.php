@@ -96,25 +96,29 @@ THE SOFTWARE.-->
                 <form method="POST" action="{{route('roomSearch') }}" class="form-inline">
                     <div class="form-group">
                         <label class="sr-only" for="city">City</label>
-                        <input name="city" type="text" class="form-control autocomplete" id="city" placeholder="City">
+                        <input name="city" value="{{ old('city') }}" type="text" class="form-control autocomplete" id="city" placeholder="City">
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="day_in">Check in</label>
-                        <input name="check_in" type="text" class="form-control datepicker" id="check_in" placeholder="Check in">
+                        <input name="check_in" value="{{ old('check_in') }}" type="text" class="form-control datepicker" id="check_in" placeholder="Check in">
                     </div>
 
                     <div class="form-group">
                         <label class="sr-only" for="day_out">Check out</label>
-                        <input name="check_out" type="text" class="form-control datepicker" id="check_out" placeholder="Check out">
+                        <input name="check_out" value="{{ old('check_out') }}"  type="text" class="form-control datepicker" id="check_out" placeholder="Check out">
                     </div>
                     <div class="form-group">
-                        <select name="room_size" class="form-control">
+                       <select name="room_size" class="form-control">
                             <option>Room size</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                            
+                            @for($i=1;$i<=5;$i++)
+                                @if( old('room_size') == $i )
+                                <option selected value="{{$i}}">{{$i}}</option>
+                                @else
+                                <option value="{{$i}}">{{$i}}</option>
+                                @endif
+                            @endfor
+                            
                         </select>
                     </div>
 
@@ -162,5 +166,6 @@ THE SOFTWARE.-->
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="{{asset('js/app.js') }}"></script>
+        @stack('scripts')
     </body>
 </html>

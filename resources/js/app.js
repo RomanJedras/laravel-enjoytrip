@@ -8,15 +8,19 @@ require('./bootstrap');
 
 
 $(function () {
+    $(".datepicker").datepicker();
+});
+
+
+$(function () {
     $(".autocomplete").autocomplete({
-        source: ["South Lucienne","Legrosside","North Wilmer","North Delaneyberg","Lake Estelle", "New York", "Warsaw", "Berlin", "Auckland", "Johannesburg", "Dubai"],
+        source: base_url + "/searchCities", /* Lecture 17 */
         minLength: 2,
         select: function (event, ui) {
             
-            console.log(ui.item.value);
+//            console.log(ui.item.value);
         }
 
 
     });
 });
-
