@@ -24,6 +24,9 @@ Route::get('/ajaxGetRoomReservations/{id}', 'FrontendController@ajaxGetRoomReser
 Route::get('/like/{likeable_id}/{type}', 'FrontendController@like')->name('like');
 Route::get('/unlike/{likeable_id}/{type}', 'FrontendController@unlike')->name('unlike');
 
+Route::post('/addComment/{commentable_id}/{type}', 'FrontendController@addComment')->name('addComment');
+
+Route::post('/makeReservation/{room_id}/{city_id}', 'FrontendController@makeReservation')->name('makeReservation');
 
 Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){ 
     
@@ -33,7 +36,14 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
   Route::get(trans('routes.profile'),'BackendController@profile')->name('profile'); 
   Route::get(trans('routes.saveroom'),'BackendController@saveRoom')->name('saveRoom');  
   Route::get('/cities','BackendController@cities')->name('cities.index');   
+
+  Route::get('/ajaxGetReservationData', 'BackendController@ajaxGetReservationData');
+   Route::get('/confirmReservation/{id}', 'BackendController@confirmReservation')->name('confirmReservation');
+  Route::get('/deleteReservation/{id}', 'BackendController@deleteReservation')->name('deleteReservation'); 
  }); 
+
+
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');

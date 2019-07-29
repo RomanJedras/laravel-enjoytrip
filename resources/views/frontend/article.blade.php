@@ -9,21 +9,21 @@
 
 
 
-    <h1>Article <small>about: <a href="{{ route('object',['id'=>$article->object->id]/* Lecture 22 */) }}">{{ $article->object->name /* Lecture 22 */ }}</a> object</small></h1>
-    <p>{{ $article->content /* Lecture 22 */ }}</p>
+    <h1>Article <small>about: <a href="{{ route('object',['id'=>$article->object->id]) }}">{{ $article->object->name }}</a> object</small></h1>
+    <p>{{ $article->content }}</p>
 
 
     <a class="btn btn-primary top-buffer" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        Article is liked <span class="badge">{{ $article->users->count() /* Lecture 22 */ }}</span>
+        Article is liked <span class="badge">{{ $article->users->count()  }}</span>
     </a>
     <div class="collapse" id="collapseExample">
         <div class="well">
 
             <ul class="list-inline">
-                @foreach( $article->users as $user ) <!-- Lecture 22 -->
-                    <li><a href="{{ route('person',['id'=>$user->id]/* Lecture 22 */) }}"><img title="{{ $user->FullName /* Lecture 22 */ }}" class="media-object img-responsive" width="50" height="50" src="{{ $user->photos->first()->path ?? $placeholder /* Lecture 22 */ }}" alt="..."> </a></li>
+                @foreach( $article->users as $user ) 
+                    <li><a href="{{ route('person',['id'=>$user->id]) }}"><img title="{{ $user->FullName  }}" class="media-object img-responsive" width="50" height="50" src="{{ $user->photos->first()->path ?? $placeholder }}" alt="..."> </a></li>
 
-                @endforeach <!-- Lecture 22 -->
+                @endforeach
             </ul>
 
 
@@ -60,14 +60,18 @@
   
     @endauth
 
+  @auth
     <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
         Add comment
     </a>
+    @else
+    <p><a href="{{ route('login') }}">Login to add a comment</a></p>
+    @endauth
     <div class="collapse" id="collapseExample2">
         <div class="well">
 
 
-            <form method="POST" class="form-horizontal">
+            <form method="POST"  action="{{ route('addComment',['article_id'=>$article->id, 'App\Article']) }}" class="form-horizontal">
                 <fieldset>
 
                     <div class="form-group">
@@ -84,6 +88,7 @@
                         </div>
                     </div>
                 </fieldset>
+                {{ csrf_field() }}
             </form>
 
         </div>

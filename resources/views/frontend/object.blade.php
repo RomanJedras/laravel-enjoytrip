@@ -98,14 +98,21 @@
         @endforeach 
     </section>
 
+  
+    @auth
     <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
         Add comment
     </a>
+    @else
+    <p><a href="{{ route('login') }}">Login to add a comment</a></p>
+    @endauth
+
+
     <div class="collapse" id="collapseExample">
         <div class="well">
 
 
-            <form method="POST" class="form-horizontal">
+            <form method="POST" action="{{ route('addComment',['object_id'=>$object->id, 'App\TouristObject']) }}" class="form-horizontal">
                 <fieldset>
                     <div class="form-group">
                         <label for="textArea" class="col-lg-2 control-label">Comment</label>
@@ -133,6 +140,7 @@
                         </div>
                     </div>
                 </fieldset>
+                 {{ csrf_field() }}
             </form>
 
         </div>

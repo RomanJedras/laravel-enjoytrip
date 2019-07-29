@@ -10,6 +10,8 @@ class Comment extends Model
 
 	use Enjoythetrip\Presenters\CommentPresenter;
 
+    public $timestamps = false;
+
     
 	 public function commentable()
     {
